@@ -15,7 +15,7 @@ func shuffle() deck {
 	d := deck{}
 
 	// slices of card suits and values
-	suits := []string{"Aces", "Diamonds", "Hearts", "Spades"}
+	suits := []string{"Clubs", "Diamonds", "Hearts", "Spades"}
 	cardVals := []string{"Ace", "Two", "Three", "Four", "Five",
 		"Six", "Seven", "Eight", "Nine", "Ten",
 		"Jack", "Queen", "King"}
