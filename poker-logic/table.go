@@ -7,13 +7,8 @@ import (
 type table struct {
 	players []player
 	dealer  deck
+	round   string //used for dealer/smblind/bblind
 }
-
-/*unnecessary atm
-func (tablePointer *table) init() {
-	//player inits
-}
-*/
 
 func (tablePointer *table) deal() {
 
@@ -34,16 +29,35 @@ func (tablePointer *table) deal() {
 	}
 }
 
+func (tablePointer *table) playhand() {
+	for i := 0; i < len(tablePointer.players); i++ {
+		fmt.Println("Bet is to you " + tablePointer.players[i].name)
+		bet(tablePointer.players[i])
+
+	}
+}
+
 func play() error {
+
 	//create table
-	t := table{newPlayers(), shuffle()}
+	t := table{newPlayers(), shuffle(), 0}
+	//set player names
+	for i := 0; i < len(t.players); i++ {
+		fmt.Println("Before")
+		t.setPlayer(i, getName(i))
+		fmt.Println("After")
+	}
+
 	//game loop
 	for {
 		t.deal()
-		for i := 0; i < len(t.players); i++ {
-			fmt.Println(t.players[i].hand)
-		}
-		fmt.Println(len(t.dealer))
+		t.playhand()
+		/*
+			for i := 0; i < len(t.players); i++ {
+				fmt.Println(t.players[i].hand)
+			}
+			fmt.Println(len(t.dealer))
+		*/
 		return nil
 	}
 }

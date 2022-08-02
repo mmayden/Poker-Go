@@ -9,15 +9,33 @@ type player struct {
 	name    string
 	hand    []string
 	handVal int
+	blind   int
 }
 
-func (tablePlayersPointer *table) addPlayer() {
-	tablePlayersPointer.players = append(tablePlayersPointer.players, player{})
+func (tablePointer *table) addPlayer() {
+	tablePointer.players = append(tablePointer.players, player{})
 }
 
-func (tablePlayersPointer *table) rmPlayer() {
-	copy(tablePlayersPointer.players[2:], tablePlayersPointer.players[3:])
-	tablePlayersPointer.players = tablePlayersPointer.players[:len(tablePlayersPointer.players)-1]
+func (tablePointer *table) rmPlayer() {
+	copy(tablePointer.players[2:], tablePointer.players[3:])
+	tablePointer.players = tablePointer.players[:len(tablePointer.players)-1]
+}
+
+func (tablePointer *table) setPlayer(n int, s string) {
+	tablePointer.players[n].name = s
+}
+
+func getName(i int) string {
+	var r, r2 string
+	for {
+		fmt.Println("What is player " + strconv.Itoa(i+1) + "'s name")
+		fmt.Scanln(&r)
+		fmt.Println("Is " + r + " correct?")
+		fmt.Scanln(&r2)
+		if r2 == "y" || r2 == "yes" {
+			return r
+		}
+	}
 }
 
 func newPlayers() []player {
@@ -39,6 +57,5 @@ func newPlayers() []player {
 		}
 	}
 
-	//create player slice and init each player
-	return make([]player, (numPlayers()))
+	return make([]player, numPlayers())
 }
