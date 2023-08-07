@@ -1,2 +1,2 @@
 # Poker-Go
-Texas Holdem with Ebiten
+Texas Holdem in Go with Ebiten
