@@ -74,8 +74,7 @@ func (playerPointer *player) bet() {
 		if r == 1 {
 			playerPointer.currentBet = "check"
 			break
-		}
-		if r == 2 {
+		} else if r == 2 {
 			for {
 				fmt.Println("How much?")
 				fmt.Scanln(&b)
@@ -93,14 +92,15 @@ func (playerPointer *player) bet() {
 					break
 				}
 			}
-		}
-		if r == 3 {
+		} else if r == 3 {
 			playerPointer.currentBet = "call"
 			break
-		}
-		if r == 4 {
+		} else if r == 4 {
 			playerPointer.currentBet = "fold"
 			break
+		} else {
+			fmt.Println("Invalid response.")
 		}
 	}
+	return
 }

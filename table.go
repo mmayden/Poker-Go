@@ -35,46 +35,49 @@ func (tablePointer *table) deal() {
 
 func (tablePointer *table) playhand() {
 
-	//flop
-	if tablePointer.betround == 1 {
-		for i := 0; i < 3; i++ {
+	for {
+		// flop
+		if tablePointer.betround == 1 {
+			for i := 0; i < 3; i++ {
+				tablePointer.board = append(tablePointer.board, tablePointer.dealer[0])
+				tablePointer.dealer = tablePointer.dealer[1:]
+			}
+			fmt.Println("The flop is    ", tablePointer.board)
+		}
+
+		// turn/river
+		if tablePointer.betround == 2 || tablePointer.betround == 3 {
 			tablePointer.board = append(tablePointer.board, tablePointer.dealer[0])
 			tablePointer.dealer = tablePointer.dealer[1:]
+			fmt.Println("Next card:    ", tablePointer.board)
 		}
-		fmt.Println("The flop is    " + tablePointer.board)
-	}
 
-	//turn/river
-	if tablePointer.betround == 2 || tablePointer.betround == 3 {
-		tablePointer.board = append(tablePointer.board, tablePointer.dealer[0])
-		tablePointer.dealer = tablePointer.dealer[1:]
-		fmt.Println("Next card:    " + tablePointer.board)
-	}
+		// showHands()
+		if tablePointer.betround == 3 {
+			tablePointer.betround = 0
+			for k := 0; k < len(tablePointer.players); k++ {
+				fmt.Println(tablePointer.players[k].name, "s hand:    ", tablePointer.players[k].hand)
+			}
 
-	for j := 0; j < len(tablePointer.players); j++ {
-		fmt.Println("Bet is to you " + tablePointer.players[j].name)
-		tablePointer.players[j].bet()
-		//if type number, bet, else they check/fold
-		//if (tablePointer.players[j].currentBet )
-		fmt.Println(tablePointer.players[j].name + " bet " + tablePointer.players[j].currentBet + "\n")
+		}
+
+		// next player
+		for j := 0; j < len(tablePointer.players); j++ {
+			fmt.Println("Bet is to you ", tablePointer.players[j].name)
+			tablePointer.players[j].bet()
+			//if type number, bet, else they check/fold
+			//if (tablePointer.players[j].currentBet )
+			fmt.Println(tablePointer.players[j].name + " bet " + tablePointer.players[j].currentBet + "\n")
+		}
 		tablePointer.betround++
-	}
-
-	//showHand()
-	if tablePointer.betround == 3 {
-		tablePointer.betround = 0
-		for k := 0; k < len(tablePointer.players); k++ {
-			fmt.Println(tablePointer.players[k].name + "s hand:    " + tablePointer.players[k].hand)
-		}
-
 	}
 }
 
 func play() error {
 
-	//create table
+	// create table
 	t := table{newPlayers(), shuffle(), 0, 0, 0, nil}
-	//set player names
+	// set player names
 	for i := 0; i < len(t.players); i++ {
 		t.setPlayer(i, getName(i))
 	}
