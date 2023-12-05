@@ -104,3 +104,7 @@ func (playerPointer *player) bet() {
 	}
 	return
 }
+
+func handVal() {
+	
+}

@@ -1,5 +1,3 @@
-// deck
-
 package main
 
 import (

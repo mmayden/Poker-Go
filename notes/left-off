@@ -1,3 +1,0 @@
-table.go > playHand()
-
-Think I want to move the game playing logic out of table.go to play.go

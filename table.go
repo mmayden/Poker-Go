@@ -14,6 +14,7 @@ type table struct {
 	board    []string
 }
 
+//pokergo game table step 1. deal hand
 func (tablePointer *table) deal() {
 
 	// set hands empty
@@ -33,67 +34,46 @@ func (tablePointer *table) deal() {
 	}
 }
 
+//pokergo game table step 2. playhand
 func (tablePointer *table) playhand() {
-
+	//playhand
 	for {
-		// flop
+		//hand is announced
 		if tablePointer.betround == 1 {
-			for i := 0; i < 3; i++ {
-				tablePointer.board = append(tablePointer.board, tablePointer.dealer[0])
-				tablePointer.dealer = tablePointer.dealer[1:]
-			}
 			fmt.Println("The flop is    ", tablePointer.board)
+		} else if tablePointer.betround == 2 {
+			fmt.Println("Turn Card:    ", tablePointer.board)
+		}else if tablePointer.betround == 3 {
+			fmt.Println("River Card:    ", tablePointer.board)
 		}
-
-		// turn/river
-		if tablePointer.betround == 2 || tablePointer.betround == 3 {
-			tablePointer.board = append(tablePointer.board, tablePointer.dealer[0])
-			tablePointer.dealer = tablePointer.dealer[1:]
-			fmt.Println("Next card:    ", tablePointer.board)
-		}
-
-		// showHands()
-		if tablePointer.betround == 3 {
-			tablePointer.betround = 0
-			for k := 0; k < len(tablePointer.players); k++ {
-				fmt.Println(tablePointer.players[k].name, "s hand:    ", tablePointer.players[k].hand)
-			}
-
-		}
-
-		// next player
+			
+		//player bets	
 		for j := 0; j < len(tablePointer.players); j++ {
+			//Player plays
 			fmt.Println("Bet is to you ", tablePointer.players[j].name)
+			//Player bets
 			tablePointer.players[j].bet()
 			//if type number, bet, else they check/fold
 			//if (tablePointer.players[j].currentBet )
+			//Announce player's bet
 			fmt.Println(tablePointer.players[j].name + " bet " + tablePointer.players[j].currentBet + "\n")
 		}
+
 		tablePointer.betround++
-	}
-}
+		//update board
+		tablePointer.board = append(tablePointer.board, tablePointer.dealer[0])
+		//update dealer
+		tablePointer.dealer = tablePointer.dealer[1:]
 
-func play() error {
-
-	// create table
-	t := table{newPlayers(), shuffle(), 0, 0, 0, nil}
-	// set player names
-	for i := 0; i < len(t.players); i++ {
-		t.setPlayer(i, getName(i))
-	}
-
-	//game loop
-	for {
-		t.deal()
-		t.playhand()
-		/*
-			for i := 0; i < len(t.players); i++ {
-				fmt.Println(t.players[i].hand)
+		//hand is over, show hands, show winner, reset betround to 0
+		if tablePointer.betround == 4 {
+			for k := 0; k < len(tablePointer.players); k++ {
+				//show hands
+				fmt.Println(tablePointer.players[k].name, "s hand:    ", tablePointer.players[k].hand)
 			}
-			fmt.Println(len(t.dealer))
-		*/
-		return nil
+			//show winner
+			fmt.Println("Coming Soon..")
+			return
+		}
 	}
 }
-
-//fmt.Println("There are " + strconv.Itoa(len(t.players)) + " gamblers with us here.")
